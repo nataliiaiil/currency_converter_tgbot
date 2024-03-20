@@ -23,20 +23,26 @@ def start(message):
 
 def amount(message):
     '''
-    
+    Function that takes amount to convert, draws buttons and handles incorrect input values
     '''
     global amount
-    amount = message.text.strip()
+    try:
+        amount = int(message.text.strip())
+    except ValueError:
+        bot.send_message(message.chat.id, 'Incorrect amount: it should be numerical value and more than 0. Try again.')
+        bot.register_next_step_handler(message, amount)
+        return
 
-    markup = types.InlineKeyboardMarkup(row_width=3)
+
+    markup = types.InlineKeyboardMarkup(row_width=2)
     btn_usd_eur = types.InlineKeyboardButton('USD -> EUR', callback_data='usd/eur')
     btn_eur_usd = types.InlineKeyboardButton('EUR -> USD', callback_data='eur/usd')
     btn_uah_eur = types.InlineKeyboardButton('UAH -> EUR', callback_data='uah/eur')
     btn_uah_usd = types.InlineKeyboardButton('UAH -> USD', callback_data='uah/usd')
     markup.add(btn_usd_eur, btn_eur_usd, btn_uah_eur, btn_uah_usd)
     bot.send_message(message.chat.id, 'Choose currency pair', reply_markup=markup)
-    
 
 
 
-bot.polling(none_stop=True)
+
+bot.infinity_polling()
