@@ -29,7 +29,7 @@ def get_amount(message):
     '''
     global amount
     try:
-        amount = int(message.text.strip())
+        amount = float(message.text.strip())
     except ValueError:
         bot.send_message(message.chat.id, 'Incorrect amount: it should be numerical value. Try again.')
         bot.register_next_step_handler(message, get_amount)
