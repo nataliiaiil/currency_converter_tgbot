@@ -67,6 +67,9 @@ def callback(call):
 
 
 def my_currency(message):
+    '''
+    Function that handles manual input of exchanged currencies
+    '''
     try:
         values = message.text.upper().split('/')
         res = currency.convert(amount, values[0], values[1])
@@ -78,4 +81,4 @@ def my_currency(message):
         bot.register_next_step_handler(message, my_currency)
 
 
-bot.polling(none_stop=True)
+bot.polling(none_stop=True) # running bot non stop
